@@ -116,11 +116,11 @@ def time_stats(df):
     print('Most Popular Month:', popular_month)
 
     # display the most common day of week
-    df['week'] = df['Start Time'].dt.isocalendar().week
+    df['day_of_week'] = df['Start Time'].dt.day_name()
 
-    popular_week = df['week'].mode()[0]
+    popular_day_week = df['day_of_week'].mode()[0]
 
-    print('Most Popular Start Week:', popular_week)
+    print('Most Popular Day Of Week:', popular_day_week)
 
     # display the most common start hour
     df['hour'] = df['Start Time'].dt.hour
@@ -193,25 +193,28 @@ def user_stats(df):
     print('Counts of User Types:',user_types)
 
 
-    # Display counts of gender
-    user_genders = df['Gender'].value_counts()
+    try:
+        # Display counts of gender
+        user_genders = df['Gender'].value_counts()
 
-    print('Counts of Gender:',user_genders)
+        print('Counts of Gender:',user_genders)
 
 
-    # Display earliest, most recent, and most common year of birth
-    min_year = df['Birth Year'].min()
+        # Display earliest, most recent, and most common year of birth
+        min_year = df['Birth Year'].min()
 
-    print('Min of Birth Year:',min_year)
+        print('Min of Birth Year:',min_year)
 
-    max_year = df['Birth Year'].max()
+        max_year = df['Birth Year'].max()
 
-    print('Max of Birth Year:',max_year)
+        print('Max of Birth Year:',max_year)
 
-    mode_year = df['Birth Year'].mode()[0]
+        mode_year = df['Birth Year'].mode()[0]
 
-    print('Most Popular  Birth Year:',mode_year)
+        print('Most Popular  Birth Year:',mode_year)
 
+    except KeyError:
+        print("There isn't a [Gender or Birth Year] column in this spreedsheet!")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
